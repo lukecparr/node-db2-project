@@ -5358,6 +5358,11 @@
     "core-util-is" "1.0.2"
     "extsprintf" "^1.2.0"
 
+"vin-validator@^1.0.0":
+  "integrity" "sha1-F2Via4VYskAvd7bCXHYX9zzsrmc="
+  "resolved" "https://registry.npmjs.org/vin-validator/-/vin-validator-1.0.0.tgz"
+  "version" "1.0.0"
+
 "w3c-hr-time@^1.0.2":
   "integrity" "sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ=="
   "resolved" "https://registry.npmjs.org/w3c-hr-time/-/w3c-hr-time-1.0.2.tgz"
