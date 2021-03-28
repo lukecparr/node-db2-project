@@ -1,7 +1,7 @@
 const vinValidator = require('vin-validator');
 const Cars = require('./cars-model');
 
-const checkCarId = (req, res, next) => {
+exports.checkCarId = (req, res, next) => {
   const { id } = req.params;
 
   Cars.getById(id)
@@ -15,38 +15,38 @@ const checkCarId = (req, res, next) => {
 		.catch((err) => res.status(500).json({ message: err.message }));
 };
 
-const checkCarPayload = (req, res, next) => {
+exports.checkCarPayload = (req, res, next) => {
 	const payload = req.body;
 
-	const badRequest400 = field => {
-		res.status(400).json({ message: `${field} is missing.` });
+	const badRequest400 = (field) => {
+		res.status(400).json({ message: `${field} is missing` });
 	};
 
 	if (!payload.vin) {
-		badRequest400('Vin');
+		badRequest400('vin');
 	} else if (!payload.make) {
-		badRequest400('Make');
+		badRequest400('make');
 	} else if (!payload.model) {
-		badRequest400('Model');
+		badRequest400('model');
 	} else if (!payload.mileage) {
-		badRequest400('Mileage');
+		badRequest400('mileage');
 	} else {
 		next();
 	}
 };
 
 
-const checkVinNumberValid = (req, res, next) => {
+exports.checkVinNumberValid = (req, res, next) => {
   const vin = req.body.vin;
 
   if (!vinValidator.validate(vin)) {
-    res.status(400).json({ message: `Vin ${vin} is invalid.` })
+    res.status(400).json({ message: `vin ${vin} is invalid` })
   } else {
     next();
   }
 };
 
-const checkVinNumberUnique = (req, res, next) => {
+exports.checkVinNumberUnique = (req, res, next) => {
   const { vin } = req.body;
 
   Cars.getAll()
@@ -60,7 +60,7 @@ const checkVinNumberUnique = (req, res, next) => {
 			});
 
 			if (vinExists) {
-				res.status(400).json({ message: `Vin ${vin} already exists.` });
+				res.status(400).json({ message: `vin ${vin} already exists` });
 			} else {
 				next();
 			}
@@ -68,9 +68,9 @@ const checkVinNumberUnique = (req, res, next) => {
 		.catch(err => res.status(500).json({ message: err.message }));
 };
 
-module.exports = {
-  checkCarId,
-  checkCarPayload,
-  checkVinNumberValid,
-  checkVinNumberUnique
+exports.logger = (req, res, next) => {
+  const currentDate = new Date();
+  const formatedTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+  console.log(`${req.method} | ${req.url} | ${formatedTime}`)
+  next();
 };

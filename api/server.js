@@ -1,9 +1,11 @@
 const express = require("express")
-const carsRouter = require('./cars/cars-router');
+const CarsRouter = require('./cars/cars-router');
+const { logger } = require('./cars/cars-middleware');
 
 const server = express();
 
 server.use(express.json());
-server.use('./api/cars', carsRouter);
+server.use(logger);
+server.use('/api/cars', CarsRouter);
 
 module.exports = server;
